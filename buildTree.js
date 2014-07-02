@@ -19,8 +19,8 @@ function buildTree(path,cb) {
     loadReadme(path,function(e,file) {
       if(!e) { module.readme = file }
       buildSubtree(moduledir,function(e, subtree) {
-        if(e) { cb(null,module) }
-        if(typeof subtree.name != "undefined") {
+        if(e) { return cb(null,module) }
+        if(subtree && typeof subtree.name != "undefined") {
           module.modules[subtree.name] = subtree
         }
       }, function() {
@@ -37,14 +37,14 @@ function buildSubtree(path, addModule, done) {
       return done()
     }
     var finished = complete(files.length, function() {
-      return cb()
+      return done()
     })
     files.forEach(function(folder) {
       var newpath = path + folder + "/"
       fs.stat(newpath,function(e,stat) {
         if(e || !stat.isDirectory()) return finished()
         buildTree(newpath,function(e,subtree) {
-          addModule(subtree)
+          addModule(null,subtree)
           finished()
         })
       })
@@ -77,7 +77,7 @@ function loadReadme(folder,cb) {
     fs.stat(folder+filenames[index], function(e,stat) {
       if(e || !stat.isFile()) {
         index++
-        if(names.length <= index) return new Error("Readme not found!")
+        if(filenames.length <= index) return new Error("Readme not found!")
         return getReadme()
       }
       fs.readFile(folder+filenames[index],cb)
