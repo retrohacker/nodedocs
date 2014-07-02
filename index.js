@@ -1,6 +1,6 @@
 var http = require('http')
 var docs = require('./buildTree.js')
-var markdown = require('markdown').markdown
+var gfm2html = require('gfm2html')
 
 module.exports = init
 
@@ -25,7 +25,10 @@ function hostContent(req,res) {
   if(module[0] == "") {
     return res.end(listContent()) //list contents
   }
-  return res.end(markdown.toHTML(getReadme(module,docs.modules)))
+  gfm2html(getReadme(module,docs.modules),function(e,html) {
+    if(e) return res.end(e)
+    res.end(html)
+  })
 }
 
 function getReadme(path,module) {
