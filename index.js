@@ -1,5 +1,6 @@
 var http = require('http')
-var docs = require('./build.js')
+var docs = require('./buildTree.js')
+var markdown = require('markdown').markdown
 
 module.exports = init
 
@@ -24,7 +25,7 @@ function hostContent(req,res) {
   if(module[0] == "") {
     return res.end(listContent()) //list contents
   }
-  return res.end(JSON.stringify(getReadme(module,docs.modules)))
+  return res.end(markdown.toHTML(getReadme(module,docs.modules)))
 }
 
 function getReadme(path,module) {
