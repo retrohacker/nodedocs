@@ -17,6 +17,7 @@ function buildTree(path,cb) {
   isPackage(path,function(yes) {
     if(!yes) { return cb(new Error("Not a package!")) }
     loadReadme(path,function(e,file) {
+      debugger;
       if(!e) { module.readme = file }
       buildSubtree(moduledir,function(e, subtree) {
         if(e) { return cb(null,module) }
@@ -45,7 +46,7 @@ function buildSubtree(path, addModule, done) {
         if(e || !stat.isDirectory()) return finished()
         buildTree(newpath,function(e,subtree) {
           addModule(null,subtree)
-          finished()
+          return finished()
         })
       })
     })
@@ -77,7 +78,7 @@ function loadReadme(folder,cb) {
     fs.stat(folder+filenames[index], function(e,stat) {
       if(e || !stat.isFile()) {
         index++
-        if(filenames.length <= index) return new Error("Readme not found!")
+        if(filenames.length <= index) return cb(new Error("Readme not found!"))
         return getReadme()
       }
       fs.readFile(folder+filenames[index],cb)

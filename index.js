@@ -1,6 +1,14 @@
 var http = require('http')
 var docs = require('./buildTree.js')
 var gfm2html = require('gfm2html')
+var readfiles = require('readfiles')
+var varstring = require('varstring')
+var path = require('path')
+var jquery
+var sidrjs
+var sidrcss
+var css
+var template
 
 module.exports = init
 
@@ -8,9 +16,22 @@ function init() {
   console.log("Building docs")
   docs("./",function(e,modules) {
     if(e) return console.log("Unable to load modules!: "+e.stack)
-    console.log("Done!")
     docs.modules = modules
-    startServer()
+    console.log("Done!")
+    readfiles([ path.join(__dirname,'files/template.html'),
+                path.join(__dirname,'files/doc.css'),
+                path.join(__dirname,'files/jquery.min.js'),
+                path.join(__dirname,'files/sidr.css'),
+                path.join(__dirname,'files/jquery.sidr.min.js')]
+    ,function(e,files) {
+      if(e) return console.log(e.stack)
+      template = files[0]
+      css = files[1]
+      jquery = files[2]
+      sidrcss = files[3]
+      sidrjs = files[4]
+      startServer()
+    })
   })
 }
 
@@ -20,14 +41,25 @@ function startServer() {
 }
 
 function hostContent(req,res) {
+  switch(req.url) {
+  case "/jquery.min.js":
+    return res.end(jquery)
+  case "/docs.css":
+    return res.end(css)
+  case "/sidr.js":
+    return res.end(sidrjs)
+  case "/sidr.css":
+    return res.end(sidrcss)
+  }
   module = req.url.split("/")
   module.shift() //Throw away /
   if(module[0] == "") {
+    console.log(req.url)
     return res.end(listContent()) //list contents
   }
-  gfm2html(getReadme(module,docs.modules),function(e,html) {
+  gfm2html(getReadme(module,docs.modules),{"template":template},function(e,html) {
     if(e) return res.end(e)
-    res.end(html)
+    res.end(varstring(html,{"modules":listContent()}))
   })
 }
 
@@ -52,7 +84,7 @@ function getChildren(parent,module) {
   var string = "<ul>"
   Object.keys(module.modules).forEach(function(key) {
     var path = parent + "/" + key
-    string += "<li><a href="+path+">"
+    string += "<li><a href=\""+path+"\">"
     string += key
     string += getChildren(path,module.modules[key])
     string += "</a>"+"</li>"
