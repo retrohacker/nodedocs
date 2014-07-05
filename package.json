@@ -1,6 +1,6 @@
 {
   "name": "nodedocs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate documentation from your cwd served up on localhost:0.0.0.0",
   "main": "index.js",
   "bin": {
