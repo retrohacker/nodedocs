@@ -34,7 +34,7 @@ Staring server on 0.0.0.0:8080
 You can now open your webbrowser and head on over to `127.0.0.1:8080` and you will see all the documentation for packages installed in your cwd!
 
 
-# How to make a whiskey sour
+# How to make a dirty martini
 
 ```text
 - 1 shotglass of Dry Vermouth
