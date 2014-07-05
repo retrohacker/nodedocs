@@ -3,6 +3,22 @@ nodedocs
 
 `nodedocs` is *THE* documentation tool for node.js. Starting from your current working directory, `nodedocs` will scan your _node\_modules_ directory for project _README.md_ files. It will build a nice little tree of your dependency list, with all of the READMEs served up on localhost!
 
+# Usage
+
+`nodedocs`
+
+Output
+
+```text
+Building docs...
+Done!
+Staring server on 0.0.0.0:8080
+```
+
+You can now open your webbrowser and head on over to `127.0.0.1:8080` and you will see all the documentation for packages installed in your cwd!
+
+![Imgur](http://i.imgur.com/jXHgEeg.png)
+
 # Why does this exist?
 
 Many languages have clunky auto-documenting tools that serve up local documentation. There is JavaDoc, godoc, etc. These rely on you to document function calls inline. This is dumb. Why do I, as a consumer of your tool, care about its implementation? Documenting function calls accomplishes nothing, and fails to give you the larger picture of what the module is designed to do.
@@ -18,21 +34,6 @@ I'm glad you asked. So the project you maintain uses an old version of hapi. You
 *But wait!*
 
 It gets worse. You are working on an awesome project in an airport terminal. You `npm install --save gfm2html` and immediately the come over the intercom saying it is time to board the plane. You get on the plane and immediately realize you didn't open github to view gfm2html's documentation... Wait! nodedocs to the rescue! Instead of paying $400 for 15 minutes of internet through American Airlines, simply type `nodedocs` for the low low price of free!
-
-# Usage
-
-`nodedocs`
-
-Output
-
-```text
-Building docs...
-Done!
-Staring server on 0.0.0.0:8080
-```
-
-You can now open your webbrowser and head on over to `127.0.0.1:8080` and you will see all the documentation for packages installed in your cwd!
-
 
 # How to make a dirty martini
 
