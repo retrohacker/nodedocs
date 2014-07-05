@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/doc.css">
+    <link rel="stylesheet" href="/sidr.css">
+    <script src="/jquery.min.js"></script>
+    <script src="/sidr.js"></script>
+    {{style}}
+  </head>
+  <body>
+    <a id="show">Toggle Menu</a>
+    <div id="sidr">
+      {modules}
+    </div>
+    {{contents}}
+
+    <script>
+    $(document).ready(function() {
+      $('#show').sidr()
+    })
+    </script>
+  </body>
+</html>
