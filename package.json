@@ -1,17 +1,16 @@
 {
-  "name": "jsdoc",
+  "name": "nodedocs",
   "version": "0.1.0",
-  "description": "Testing",
+  "description": "Generate documentation from your cwd served up on localhost:0.0.0.0",
   "main": "index.js",
   "bin": {
-    "jsdoc": "jsdoc"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "nodedocs": "nodedocs"
   },
   "author": "william.jblankenship@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "gfm2html": "^0.1.0",
+    "gfm2html": "git://github.com/wblankenship/gfm2html.git#master",
+    "readfiles": "^1.0.0",
+    "varstring": "^0.2.0"
   }
 }
