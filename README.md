@@ -1,6 +1,8 @@
 nodedocs
 ===
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/retrohacker/nodedocs.svg)](https://greenkeeper.io/)
+
 `nodedocs` is *THE* documentation tool for node.js. Starting from your current working directory, `nodedocs` will scan your _node\_modules_ directory for project _README.md_ files. It will build a nice little tree of your dependency list, with all of the READMEs served up on localhost!
 
 # Usage
